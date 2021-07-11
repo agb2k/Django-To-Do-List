@@ -13,6 +13,7 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+        return self.description
 
     class Meta:
         ordering = ['complete']

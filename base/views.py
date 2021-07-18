@@ -38,6 +38,7 @@ class RegisterPage(FormView):
             return redirect('tasks')
         return super(RegisterPage, self).get(*args, **kwargs)
 
+
 # Create your views here.
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
@@ -48,6 +49,10 @@ class TaskList(LoginRequiredMixin, ListView):
         context = super().get_context_data()
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['tasks'] = context['tasks'].filter(complete=False)
+
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['tasks'] = context['tasks'].filter(title__icontains=search_input)
         return context
 
 
